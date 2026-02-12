@@ -1,0 +1,272 @@
+import java.util.Arrays;
+
+class Student{
+    private String name;
+    private int studentid;
+    private double gpa;
+            
+            Student(){
+                name="Unknown";
+                studentid=0;
+                gpa=4.0;
+            }
+            Student(String name, int studentid,double gpa ){
+                this.name=name;
+                this.studentid=studentid;
+                this.gpa=gpa;
+
+            }
+        void setstudentid(int studentid){
+            this.studentid=studentid;
+
+        }
+        void setname(String name){
+            this.name=name;
+
+        }
+        void setgpa(double gpa){
+            this.gpa=gpa;
+        }
+
+
+        public  String getname(){
+            return name;
+        }
+        public int getstudentid(){
+            return studentid;
+        }
+        public double getgpa(){
+            return gpa;
+        }
+        void DisplayInfo(){
+            System.out.println("Student Name : "+ name);
+            System.out.println("Student ID  : "+  studentid);
+             System.out.println("Student CGPA : "+ gpa);
+}
+public double processGPAs(double[] gpas) {
+    double highest = 0.0;  // start with smallest valid GPA
+
+    for (double gpa : gpas) {
+        if (gpa > 4.0) {      // invalid GPA, stop loop
+            break;
+        }
+        if (gpa < 1.0) {      // skip very low GPA
+            continue;
+        }
+        if (gpa > highest) {  // update highest valid GPA
+            highest = gpa;
+        }
+    }
+
+    return highest;
+}
+
+ public double calculateAverage(double[] grades){
+    double sum=0;
+  
+    for(double g : grades){
+        sum+=g;
+
+                          }
+            return    sum/grades.length;
+
+     }
+
+public boolean finalGradeInArray(char[] grades, char target) {
+    for (int i = 0; i < grades.length; i++) {
+        if (grades[i] == target) {
+            return true; // found it
+        }
+    }
+    return false; // not found after checking whole array
+}
+
+public char[] getGradeArray(int count){
+    char[] grade = new char[count];
+        for(int i=0; i<count;i++){
+        if(i%5==0){
+                grade[i]='A';
+            }
+        else if(i%5==1){
+                grade[i]='B';        
+            }
+        else if(i%5==2){
+            grade[i]='C';
+
+        }
+        else if(i%5==3){
+            grade[i]='D';
+        }
+        else {
+            grade[i]='F';
+        }
+        
+
+}
+  return grade;          
+}
+public void modifyArray(int[] arr){
+    for(int i=0;i<arr.length;i++){
+        arr[i]=arr[i]*2;
+    }
+
+}
+
+ 
+
+                public char  calculateGrade(){
+            if(gpa>=3.7 && gpa<=4) return 'A';
+            else if(gpa>=3.0 && gpa <3.7) return 'B';
+            else if(gpa>=2.0 && gpa <3.0) return 'C';
+            else if(gpa>=1.0 && gpa < 2.0) return 'D';
+        else {
+            return 'F';
+        }
+    }
+    public boolean IsHonorStudent(){
+        return (gpa>=3.7)? true : false;
+    }
+
+    public void updateGPA(double newGPA){
+        if(newGPA<=4.0 && newGPA >=0.0){
+            gpa=newGPA;
+        }
+    }
+
+
+
+    public String getStatus(){
+           if(gpa>=0.0 && gpa <=4.0){ 
+            if(gpa>=3.7 && gpa<=4) return "Excellent";
+                else if(gpa>=3.0 && gpa <3.7) return "Good";
+                else if(gpa>=2.0 && gpa <3.0) return "Average";
+                else if(gpa>=1.0 && gpa < 2.0) return "Needs improvement";
+                    else {
+                    return "Fail";
+            }
+        }
+        return "Invalid CGPA";
+    }
+
+public int  calculateTotal(int a , int b ){
+    return a+b;
+} 
+
+public double  calculateTotal(double  a , double b ){
+    return a+b;
+} 
+
+public int  calculateTotal(int a , int b ,int c){
+    return a+b+c;
+} 
+
+
+
+
+public int process2DArray(int[][] matrix ){
+    int largest =matrix[0][0];
+    for(int i=0; i<matrix.length;i++){
+        for(int j=0;j<matrix[i].length;j++){
+            if (matrix[i][j]>largest){
+                largest=matrix[i][j];
+            }
+        }
+    }
+    return largest;
+}
+
+
+public int[][] getStudentGrades(int[][] scores){
+    
+    return scores;
+}
+
+
+public void displayGradeTable(int[][] grades) {
+    System.out.println("Student\tAssignment 1\tAssignment 2\tAssignment 3\tAssignment 4");
+
+    for (int i = 0; i < grades.length; i++) {
+        System.out.print("Student " + (i + 1) + "\t");
+        for (int j = 0; j < grades[i].length; j++) {
+            System.out.print(grades[i][j] + "\t\t");
+        }
+        System.out.println();
+    }
+}
+
+
+
+
+
+
+
+public double calculateRowAverage(int[][] grades, int row ){
+    double SumAll=0;
+
+    for(int i=0;i<grades[row].length;i++){
+        SumAll+=grades[row][i];
+
+    }
+    return SumAll/grades[row].length;
+}
+
+public double calculateColumnAverage(int[][] grades,int column){
+    double SumAll=0;
+    for(int i=0;i<grades.length;i++){
+        SumAll+=grades[i][column];
+    }
+    return SumAll/grades.length;
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+
+ class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        Student s2 = new Student("John Doe", 12345, 3.75);
+        
+        int matrix[][]={
+                            {23,45,78},
+                            {11,90,44},
+                            {44,22,12}   
+                    };
+int[][] Scores={
+                {34,55,66,79},
+                {22,11,90,10},
+                {90,48,88,56}
+
+    };
+
+        int[] arr={34,22,42,11,56,23};
+    double[] grades={66,67,22,23,90,77};    
+    double[]    CGPA ={3.44,2.99,1.34,4.0};
+    char[] letterGrades={'D','A','F','B','C'};
+    System.out.println("Grade A found :"+s1.finalGradeInArray(letterGrades,'A'));
+    System.out.println("Average : "+s1.calculateAverage(grades));
+  
+   System.out.println("Highest GPA : "+s1.processGPAs( CGPA));
+     s1.modifyArray(arr);
+     System.out.print("Doubled Values : ");
+     for(int num: arr){
+        System.out.print(num + " ");
+     }
+ System.out.println("\nThe Array of the Characters is  : "+Arrays.toString(s1.getGradeArray(5)));
+ System.out.println(s1.process2DArray(matrix));
+ System.out.println(Arrays.deepToString(s1.getStudentGrades(Scores)));
+ System.out.println("\n\n\n");
+ s1.displayGradeTable(Scores);
+System.out.println(s1.calculateRowAverage(Scores,2));
+System.out.println(s1.calculateColumnAverage(Scores,3));
+
+}
+}
