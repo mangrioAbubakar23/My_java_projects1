@@ -1,0 +1,160 @@
+class BankAccount{
+	private String accNumber;
+	private String accHolderName;
+	private double balance;
+	private String accType;
+	private String[] transactionHistory=new String[20];
+	private int transactionCount=0;
+	public int index;		
+
+	// Parameterized constructor (accountNumber, accountHolderName, initialBalance, accountType)
+	BankAccount(String a, String b,double c,String accType){
+		accNumber=a;
+		accHolderName=b;
+		balance=c;
+		this.accType=accType;
+	}
+
+	// deposit method
+	public void deposit(double amount){
+		deposit(amount,"Deposit");
+	}
+
+	// method overloading for deposit with description
+	public void deposit(double amount,String description){
+		if(amount<=0){
+			System.out.println("Invalid deposit amount.");
+			return;
+		}
+		balance+=amount;
+		index=transactionCount % transactionHistory.length;//making the circular pattern
+		transactionHistory[index]=description+": +"+amount;
+		transactionCount++;
+	}
+
+	// withdraw method
+	public void withdraw(double amount){
+		if(amount<=0){
+			System.out.println("Invalid withdrawal amount.");
+			return;
+		}
+		if(accType.equalsIgnoreCase("Savings")){
+			if(balance-amount<500){
+				System.out.println("Savings account must maintain minimum 500.");
+				return;
+			}
+		}
+		if(accType.equalsIgnoreCase("Checking")){
+			if(balance-amount<0){
+				System.out.println("Insufficient balance.");
+				return;
+			}
+		}
+		balance-=amount;
+		index=transactionCount % transactionHistory.length;//making the circular pattern
+		transactionHistory[index]="Withdraw: -"+amount;
+		transactionCount++;
+		if(accType.equalsIgnoreCase("Checking") && balance<100){
+			balance-=5;
+			index=transactionCount % transactionHistory.length;
+			transactionHistory[index]="Low balance fee: -5";
+			transactionCount++;
+		}
+	}
+
+	// transfer method
+	public void transfer(BankAccount recipient,double amount){
+		if(amount<=0 || balance<amount){
+			System.out.println("Transfer failed.");
+			return;
+		}
+		balance-=amount;
+		recipient.balance+=amount;
+		index=transactionCount % transactionHistory.length;
+		transactionHistory[index]="Transferred: -"+amount+" to "+recipient.accNumber;
+		transactionCount++;
+		int recipientIndex=recipient.transactionCount % recipient.transactionHistory.length;
+		recipient.transactionHistory[recipientIndex]="Received: +"+amount+" from "+this.accNumber;
+		recipient.transactionCount++;
+	}
+
+	double interest=0;
+
+	public double calculateInterest(){
+		if(accType.equalsIgnoreCase("Savings")){
+			interest=balance*2/100;
+		}
+		else{
+			interest= balance*0.5/100; 
+		}
+		return interest;
+	}
+
+	public void addInterest(){
+		balance+=interest;
+	}
+
+	public double getBalance(){
+		return balance;
+	}
+
+	public String[] getTransactionHistory(){
+		return (transactionHistory);
+	}
+
+	public String getAccountSummary() {
+		return "Account Number: " + accNumber +
+		       "\nAccount Holder: " + accHolderName +
+		       "\nAccount Type: " + accType +
+		       "\nBalance: " + balance;
+	}
+
+	public Boolean lowBalance(){
+		if(balance<100){
+			System.out.println("Yes! the Account has low balance");
+			return true;
+		}
+		else{
+			System.out.println("NO! the Account has not the low balance");
+			return false;
+		}
+	}
+
+	public void canWithdraw(){
+		if(balance>0){
+			System.out.println("Yes the transaction is possible ");
+		}
+		else{
+			System.out.println("The account cannot perform transaction , balance = 0");
+		}
+	}
+
+	public void printTransactionHistory(){
+		for(int i=0;i<transactionHistory.length;i++){
+			if(transactionHistory[i]!=null){
+				System.out.println(transactionHistory[i]);
+			}
+		}
+	}
+}
+
+ class Main{
+	public static void main(String[] args){
+		BankAccount acc1 = new BankAccount("A101","Ali",1000,"Savings");
+		BankAccount acc2 = new BankAccount("A102","Sara",200,"Checking");
+
+		acc1.deposit(500);
+		acc2.deposit(50,"Salary Deposit");
+
+		acc1.withdraw(700);
+		acc2.withdraw(120);
+
+		acc1.transfer(acc2,100);
+
+		System.out.println(acc1.getAccountSummary());
+		System.out.println(acc2.getAccountSummary());
+
+		acc1.printTransactionHistory();
+		acc2.printTransactionHistory();
+	}
+}
